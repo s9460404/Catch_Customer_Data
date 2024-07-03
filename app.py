@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, jsonify
-import pymysql
+#import pymysql
 import pandas as pd
-from openpyxl import load_workbook
+#from openpyxl import load_workbook
 #import charts
 # 資料庫參數設定
 db_settings = {

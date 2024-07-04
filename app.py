@@ -192,7 +192,7 @@ def merge_submit():
 
 @app.route("/database_submit", methods=['POST'])
 def database_submit():
-
+    
     if 'clientFile' not in request.files:
         return jsonify({'error': 'No file part'})
     
@@ -210,7 +210,22 @@ def database_submit():
 
         #print(database)
         database.to_excel('database.xlsx', index=False) #輸出xlsx
+    
     return {"status":"sucess"}
+
+@app.route("/update_database", methods=['POST'])
+def update_database():
+    data = request.get_json()  # 取得 POST 過來的 JSON 資料
+    new_database = pd.DataFrame(data)
+    new_database.to_excel('database.xlsx', index=False) #輸出xlsx
+
+    return {"status":"update sucess"}
+
+@app.route("/load_database", methods=['POST'])
+def load_database():
+    database = pd.read_excel('database.xlsx')
+    result_json = database.to_json(orient='records', date_format='iso', force_ascii=False)
+    return jsonify({'status': 'success','result': result_json})
 
 def isNaN(num):
     return num != num
